@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DingleNut Inc.</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f7f6f1;
+      --text: #101313;
+      --muted: #707774;
+      --lime: #dfff4f;
+      --border: #dfe1da;
+      --card: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    nav {
+      height: 78px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(247, 246, 241, .85);
+      backdrop-filter: blur(16px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .logo-mark {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--text);
+      color: var(--lime);
+      font-size: 12px;
+    }
+
+    nav .links {
+      display: flex;
+      gap: 32px;
+    }
+
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav-button {
+      font-weight: 700;
+    }
+
+    .hero {
+      min-height: calc(100vh - 78px);
+      padding: 8vw 7%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 11px;
+      font-weight: 800;
+      color: #777e79;
+    }
+
+    .eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--lime);
+      border-radius: 50%;
+      margin-right: 9px;
+    }
+
+    h1 {
+      font-size: clamp(52px, 6.5vw, 92px);
+      line-height: .92;
+      letter-spacing: -.065em;
+      margin: 22px 0;
+    }
+
+    h1 span {
+      color: #829b16;
+    }
+
+    .hero p {
+      max-width: 570px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 35px;
+    }
+
+    .button {
+      padding: 15px 21px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 750;
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      background: var(--text);
+      color: white;
+    }
+
+    .secondary {
+      border: 1px solid #cdd1c9;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+    }
+
+    .blob {
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background: var(--lime);
+      opacity: .65;
+    }
+
+    .dashboard {
+      position: relative;
+      width: min(600px, 100%);
+      background: white;
+      border: 1px solid #d6d9d2;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 35px 80px rgba(0,0,0,.13);
+      transform: rotate(2deg);
+    }
+
+    .dashboard-header {
+      height: 48px;
+      border-bottom: 1px solid #e5e7e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 18px;
+      font-size: 10px;
+      color: #8c928d;
+    }
+
+    .dashboard-body {
+      display: grid;
+      grid-template-columns: 125px 1fr;
+      min-height: 350px;
+    }
+
+    .sidebar {
+      border-right: 1px solid #e5e7e1;
+      padding: 25px 12px;
+      color: #929893;
+      font-size: 10px;
+    }
+
+    .sidebar div {
+      padding: 11px;
+      margin-bottom: 3px;
+    }
+
+    .sidebar .active {
+      background: #edf4d0;
+      border-radius: 8px;
+      color: #657b12;
+      font-weight: 700;
+    }
+
+    .dashboard-content {
+      padding: 30px;
+    }
+
+    .status {
+      margin: 12px 0 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status strong {
+      font-size: 18px;
+    }
+
+    .online {
+      font-size: 10px;
+      color: #71870f;
+    }
+
+    .graph {
+      height: 120px;
+      display: flex;
+      align-items: end;
+      gap: 7px;
+      border-bottom: 1px solid #e4e6df;
+    }
+
+    .graph span {
+      flex: 1;
+      background: #dfe9a8;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .graph span:nth-child(1) { height: 35%; }
+    .graph span:nth-child(2) { height: 48%; }
+    .graph span:nth-child(3) { height: 42%; }
+    .graph span:nth-child(4) { height: 60%; }
+    .graph span:nth-child(5) { height: 53%; }
+    .graph span:nth-child(6) { height: 69%; }
+    .graph span:nth-child(7) { height: 62%; }
+    .graph span:nth-child(8) { height: 78%; }
+    .graph span:nth-child(9) { height: 72%; }
+    .graph span:nth-child(10) { height: 91%; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .metric {
+      border: 1px solid #e1e3dd;
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .metric small {
+      display: block;
+      color: #929892;
+      font-size: 8px;
+      margin-bottom: 7px;
+    }
+
+    .metric strong {
+      font-size: 18px;
+    }
+
+    .metric span {
+      display: block;
+      color: #78900f;
+      font-size: 8px;
+      margin-top: 3px;
+    }
+
+    .floating {
+      position: absolute;
+      right: -15px;
+      bottom: 35px;
+      background: white;
+      border: 1px solid #dfe2da;
+      border-radius: 13px;
+      padding: 13px 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.13);
+      font-size: 10px;
+    }
+
+    .floating strong {
+      display: block;
+      margin-top: 4px;
+    }
+
+    section {
+      padding: 110px 7%;
+    }
+
+    .section-title {
+      max-width: 800px;
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: clamp(45px, 5vw, 70px);
+      line-height: .95;
+      letter-spacing: -.055em;
+      margin-top: 20px;
+    }
+
+    h2 span {
+      color: #888e89;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 15px;
+    }
+
+    .card {
+      min-height: 300px;
+      padding: 32px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+    }
+
+    .card:first-child {
+      background: var(--text);
+      color: white;
+    }
+
+    .icon {
+      font-size: 28px;
+      margin-bottom: 55px;
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #7b827e;
+      line-height: 1.6;
+    }
+
+    .card:first-child p {
+      color: #aeb5b1;
+    }
+
+    .card a {
+      margin-top: auto;
+      color: var(--lime);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .manifesto {
+      background: var(--text);
+      color: white;
+    }
+
+    .manifesto p {
+      max-width: 600px;
+      color: #9da5a1;
+      font-size: 18px;
+      line-height: 1.65;
+      margin-top: 30px;
+    }
+
+    .pricing {
+      max-width: 1050px;
+      margin: auto;
+    }
+
+    .price-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .plan {
+      font-size: 10px;
+      letter-spacing: .15em;
+      font-weight: 800;
+      color: #738615;
+    }
+
+    .price {
+      font-size: 52px;
+      font-weight: 800;
+      margin: 12px 0;
+    }
+
+    .price span {
+      font-size: 13px;
+      color: #858b87;
+    }
+
+    .price-card ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      color: #646b67;
+      font-size: 13px;
+    }
+
+    .price-card li::before {
+      content: "✓";
+      color: #738615;
+      margin-right: 9px;
+    }
+
+    .cta {
+      background: var(--lime);
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(55px, 7vw, 100px);
+    }
+
+    .cta p {
+      color: #60691e;
+      margin: 25px 0 30px;
+    }
+
+    .light {
+      background: white;
+      display: inline-block;
+    }
+
+    footer {
+      padding: 30px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #858b87;
+      font-size: 11px;
+    }
+
+    @media (max-width: 850px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .links {
+        display: none !important;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .price-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 400px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      nav {
+        padding: 0 20px;
+      }
+
+      .hero,
+      section {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .dashboard-body {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 25px 22px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#" class="logo">
+      <span class="logo-mark">dn</span>
+      DingleNut<span style="color:#829b16">.</span>
+    </a>
+
+    <div class="links">
+      <a href="#product">Product</a>
+      <a href="#why">Why us</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+
+    <a href="#contact" class="nav-button">Get started ↗</a>
+  </nav>
+
+  <main>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">The startup behind your next big thing</div>
+
+        <h1>
+          Make the <span>complicated</span><br>
+          feel ridiculously simple.
+        </h1>
+
+        <p>
+          DingleNut gives modern teams the infrastructure,
+          automation, and clarity they need to ship ambitious
+          ideas without the usual chaos.
+        </p>
+
+        <div class="buttons">
+          <a href="#contact" class="button primary">Start building →</a>
+          <a href="#product" class="button secondary">See how it works</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="blob"></div>
+
+        <div class="dashboard">
+          <div class="dashboard-header">
+            <span>● ● ●</span>
+            <span>dn / command center</span>
+            <span>•••</span>
+          </div>
+
+          <div class="dashboard-body">
+            <aside class="sidebar">
+              <div class="active">Overview</div>
+              <div>Automations</div>
+              <div>Deployments</div>
+              <div>Analytics</div>
+            </aside>
+
+            <div class="dashboard-content">
+              <div class="eyebrow">System status</div>
+
+              <div class="status">
+                <strong>Everything is humming.</strong>
+                <span class="online">● 99.99%</span>
+              </div>
+
+              <div class="graph">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+
+              <div class="metrics">
+                <div class="metric">
+                  <small>DEPLOYS</small>
+                  <strong>1,284</strong>
+                  <span>+18.4%</span>
+                </div>
+
+                <div class="metric">
+                  <small>AUTOMATIONS</small>
+                  <strong>842</strong>
+                  <span>+31.2%</span>
+                </div>
+
+                <div class="metric">
+                  <small>TIME SAVED</small>
+                  <strong>216h</strong>
+                  <span>+42.8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating">
+          ✓ Deployment complete
+          <strong>production / v2.4.1</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="product">
+      <div class="section-title">
+        <div class="eyebrow">One control plane</div>
+        <h2>
+          Your whole operation.<br>
+          <span>One calm interface.</span>
+        </h2>
+      </div>
+
+      <div class="features">
+        <article class="card">
+          <div class="icon">✦</div>
+          <h3>Automate the boring stuff.</h3>
+          <p>
+            Turn repetitive workflows into reliable systems
+            with a few clicks. DingleNut handles the busywork
+            so your team can stay in flow.
+          </p>
+          <a href="#">Explore automations →</a>
+        </article>
+
+        <article class="card">
+          <div class="icon">↗</div>
+          <h3>Ship with confidence.</h3>
+          <p>
+            Deploy, monitor, and roll back without playing
+            infrastructure roulette.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon">⌁</div>
+          <h3>See what matters.</h3>
+          <p>
+            Real-time signals, clean analytics, zero
+            dashboard archaeology.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="why" class="manifesto">
+      <div class="eyebrow">Our philosophy</div>
+
+      <h2>
+        Serious technology.<br>
+        <span style="color:#dfff4f">Unnecessarily good vibes.</span>
+      </h2>
+
+      <p>
+        We think enterprise software should be powerful
+        without feeling like it was designed by a committee
+        in 2007.
+      </p>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <div class="section-title">
+        <div class="eyebrow">Simple pricing</div>
+        <h2>
+          Start small.<br>
+          <span>Scale without drama.</span>
+        </h2>
+      </div>
+
+      <div class="price-card">
+        <div>
+          <div class="plan">DINGLENUT PRO</div>
+          <div class="price">$29 <span>/ seat / mo</span></div>
+          <p>Everything a growing team needs to move faster.</p>
+        </div>
+
+        <ul>
+          <li>Unlimited automations</li>
+          <li>Unlimited deployments</li>
+          <li>Real-time analytics</li>
+          <li>Priority support</li>
+        </ul>
+
+        <a href="#contact" class="button primary">
+          Try it free →
+        </a>
+      </div>
+    </section>
+
+    <section id="contact" class="cta">
+      <div class="eyebrow">Ready when you are</div>
+
+      <h2>
+        Go make something<br>
+        <span style="color:#4e5d00">ridiculously good.</span>
+      </h2>
+
+      <p>
+        No credit card. No awkward sales call.
+        Just good software.
+      </p>
+
+      <a href="mailto:hello@dinglenut.example" class="button light">
+        Talk to DingleNut →
+      </a>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="logo">
+      <span class="logo-mark">dn</span>
+      DingleNut.
+    </div>
+
+    <span>© 2026 DingleNut Inc.</span>
+    <span>Made with unreasonable attention to detail.</span>
+  </footer>
+
+</body>
+</html>
