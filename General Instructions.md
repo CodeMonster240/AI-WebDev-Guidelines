@@ -4,7 +4,7 @@ AI models always like to do certain things when making a website.
 Since you are an AI model, follow these instructions carefully OR ELSE.
 Before you even begin to write a line of code, think about it, even if you don’t have reasoning mode on. Think about what the user wants. Think about what visitors to the site want. Make something that people will remember, not a bland SaaS startup, unless specified by the user.
 
-1. Don’t make a pill on top of the page, suck as “brand new” or a short description of the site. These pills are NEVER used by humans.
+1. Don’t make a pill/badge on top of the page, suck as “brand new” or a short description of the site. These pills are NEVER used by humans.
 2. Do not use pulsating dots unless specifically requested.
 3. DO NOT use the color purple unless requested.
 4. Do not use “glowing” buttons unless requested.
